@@ -3,6 +3,7 @@ from decouple import config
 import motor.motor_asyncio
 import time
 from settings import Settings
+from transliterate import translit, get_available_language_codes
 
 
 class DataBase:
@@ -15,6 +16,18 @@ class DataBase:
         self.cluster = motor.motor_asyncio.AsyncIOMotorClient(url_connect)
         self.user_collection = self.cluster.MemeSwap.users
         self.settings_collection = self.cluster.MemeSwap.settings
+        self.patterns_collection = self.cluster.MemeSwap.patterns
+
+    async def create_patterns(self, name: str, user_id: int, share: bool = False) -> dict:
+        data = {
+            'id': await self.patterns_collection.count_documents({}) + 1,
+            'name': name,
+            'translit': translit(name, 'ru', reversed=True),
+            'user_id': user_id,
+            'is_share': share
+        }
+        await self.patterns_collection.insert_one(data)
+        return data
 
     async def create_user(self, user_id: int):
         data = {

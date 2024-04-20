@@ -1,28 +1,41 @@
-import aioboto3
+from miniopy_async import Minio
+from miniopy_async.commonconfig import Tags
+import random
+import string
+import io
 
 
 class S3Storage:
+    buckets = ['patterns']
+
     def __init__(self):
-        self.session = aioboto3.Session()
-        # TODO: Go config
-        self.s3 = self.session.resource(
-            service_name='s3',
-            endpoint_url='http://localhost:9000/',
-            aws_access_key_id='your_access_key',
-            aws_secret_access_key='your_secret_key'
+        #TODO: Go conf
+        self.client = Minio(
+            "localhost:9000",
+            access_key="your_access_key",
+            secret_key="your_secret_key",
+            secure=False
         )
 
-    def get_bucket_name(self, pk: int):
-        return f'pattern-{pk}'
+    async def init(self):
+        for bucket in self.buckets:
+            found = await self.client.bucket_exists(bucket)
+            if not found:
+                await self.client.make_bucket(bucket)
 
-    async def create_pattern(self, pk: int):
-        async with self.s3 as s3:
-            await s3.create_bucket(Bucket=self.get_bucket_name(pk))
+    async def add_patterns_photo(self, photos: list[io.BytesIO], pattern_id: int):
+        tags = Tags(for_object=True)
+        tags["pattern"] = str(pattern_id)
 
-    async def add_for_pattern(self, pattern_id: int, file):
-        async with self.s3 as s3:
-            await s3.upload_file(file, self.get_bucket_name(pattern_id), file)
+        for photo in photos:
+            await self.client.put_object(bucket_name='patterns',
+                                         object_name=''.join(random.choices(string.hexdigits, k=10)),
+                                         length=int(len(photo.read())),
+                                         data=io.BytesIO(photo.getbuffer()),
+                                         tags=tags)
 
+
+s3 = S3Storage()
 
 if __name__ == '__main__':
     import asyncio

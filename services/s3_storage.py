@@ -3,6 +3,7 @@ from miniopy_async.commonconfig import Tags
 import random
 import string
 import io
+import aiohttp
 
 
 class S3Storage:
@@ -34,6 +35,18 @@ class S3Storage:
                                          data=io.BytesIO(photo.getbuffer()),
                                          tags=tags)
 
+    async def get_patterns_photos(self, pattern_id: int):
+        photos = []
+
+        for photo in await self.client.list_objects('patterns'):
+            tags = await self.client.get_object_tags('patterns', photo.object_name)
+            if tags.get('pattern') == str(pattern_id):
+                async with aiohttp.ClientSession() as session:
+                    file = await self.client.get_object('patterns', photo.object_name, session)
+                    photos.append(io.BytesIO(await file.read()))
+
+        return photos
+
 
 s3 = S3Storage()
 
@@ -41,7 +54,9 @@ if __name__ == '__main__':
     import asyncio
 
     loop = asyncio.get_event_loop()
+
     async def main():
         s = S3Storage()
-        await s.create_pattern(1)
+        await s.get_patterns_photos(1)
+
     loop.run_until_complete(main())

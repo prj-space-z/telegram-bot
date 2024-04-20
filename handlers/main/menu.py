@@ -8,13 +8,15 @@ router = Router(name=__name__)
 
 
 @router.message(Command("start"))
-async def cmd_start(message: Message):
+async def cmd_start(message: Message, state: FSMContext):
     """Command: /start"""
 
     # TODO: Перенести в конфик текста
+    await state.clear()
     await message.answer_photo(
         photo='https://i.imgur.com/ZRTZzvi.jpg',
-        caption='<b>👋  Привет! Я могу сделать смешные стикеры-мемы с твоим лицом XD</b>\n\n<b>👑  А ещё ты можешь сделать свой собственный пак со своими мемами</b>',
+        caption='<b>👋  Привет! Я могу сделать смешные стикеры-мемы с твоим лицом</b>\n\n'
+                '<b>👑  А ещё ты можешь сделать свой собственный пак со своими мемами</b>',
         reply_markup=for_index.menu()
     )
 
@@ -23,6 +25,5 @@ async def cmd_start(message: Message):
 async def go_menu(callback: CallbackQuery, state: FSMContext):
     """Go menu"""
 
-    await state.clear()
     await callback.message.delete()
-    await cmd_start(callback.message)
+    await cmd_start(callback.message, state)

@@ -29,6 +29,9 @@ class DataBase:
         await self.patterns_collection.insert_one(data)
         return data
 
+    async def get_patterns(self, js: dict) -> list:
+        return [data async for data in self.patterns_collection.find(js)]
+
     async def create_user(self, user_id: int):
         data = {
             'user_id': user_id,

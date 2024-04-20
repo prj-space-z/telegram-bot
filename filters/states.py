@@ -7,5 +7,9 @@ class PatternCreate(StatesGroup):
     title = State()
 
 
+class StickersCreate(StatesGroup):
+    image = State()
+
+
 NoneState = StateFilter(None)
 AnyState = ~NoneState

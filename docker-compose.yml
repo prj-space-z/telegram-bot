@@ -11,5 +11,18 @@ services:
     ports:
       - "6379:6379"
 
+  minio:
+    image: minio/minio
+    container_name: minio
+    restart: always
+    ports:
+      - "9000:9000"
+    environment:
+      MINIO_ACCESS_KEY: your_access_key
+      MINIO_SECRET_KEY: your_secret_key
+    volumes:
+      - ./data:/data
+    command: server /data
+
 volumes:
   redis_data:

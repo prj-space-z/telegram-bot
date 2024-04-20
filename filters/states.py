@@ -2,9 +2,9 @@ from aiogram.filters import StateFilter
 from aiogram.fsm.state import State, StatesGroup
 
 
-class SGForm(StatesGroup):
-    name = State()
-    age = State()
+class PatternCreate(StatesGroup):
+    image = State()
+    title = State()
 
 
 NoneState = StateFilter(None)

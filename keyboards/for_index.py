@@ -5,7 +5,7 @@ from aiogram.utils.keyboard import InlineKeyboardMarkup
 def menu() -> InlineKeyboardMarkup:
     buttons = [
         [types.InlineKeyboardButton(text="Создать стикеры 🎉", callback_data="createStickers")],
-        [types.InlineKeyboardButton(text="Добавить шаблон ⚡️", callback_data="accountsMenu")],
+        [types.InlineKeyboardButton(text="Добавить шаблон ⚡️", callback_data="createPattern")],
         [types.InlineKeyboardButton(text="Как это работает? 🔥", callback_data="howWork")],
     ]
 

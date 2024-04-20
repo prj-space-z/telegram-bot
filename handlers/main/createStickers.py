@@ -15,7 +15,7 @@ async def create_stickers(callback: CallbackQuery):
     )
 
 
-@router.message(F.photo)
-async def process_photo(message: Message, bot: Bot):
-    file_name = f"photos/{message.photo[-1].file_id}.jpg"
-    await bot.download(message.photo[-1], destination=file_name)
+# @router.message(F.photo)
+# async def process_photo(message: Message, bot: Bot):
+#     file_name = f"photos/{message.photo[-1].file_id}.jpg"
+#     await bot.download(message.photo[-1], destination=file_name)

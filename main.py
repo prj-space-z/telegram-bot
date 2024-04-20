@@ -8,10 +8,6 @@ from services import db
 logging.basicConfig(level=logging.INFO)
 
 
-async def test():
-    print("test")
-
-
 async def run_bot():
     dp = create_dispatcher()
     bot = create_bot(settings=cast(Settings, dp["settings"]))

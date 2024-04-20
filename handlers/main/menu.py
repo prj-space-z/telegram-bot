@@ -2,6 +2,7 @@ from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, CallbackQuery
 from keyboards import for_index
+from aiogram.fsm.context import FSMContext
 
 router = Router(name=__name__)
 
@@ -19,8 +20,9 @@ async def cmd_start(message: Message):
 
 
 @router.callback_query(F.data == "menu")
-async def go_menu(callback: CallbackQuery):
+async def go_menu(callback: CallbackQuery, state: FSMContext):
     """Go menu"""
 
+    await state.clear()
     await callback.message.delete()
     await cmd_start(callback.message)

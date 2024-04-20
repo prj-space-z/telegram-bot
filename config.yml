@@ -1,2 +1,3 @@
 api_token: 6809006471:AAEKv-0nCZNn9tgpSO-Lof3W12QJABHvm_k
 admin_id: 6138338289
+mongodb_url: mongodb://localhost:27017

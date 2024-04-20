@@ -7,6 +7,7 @@ from redis.asyncio import Redis
 from services import mjson
 from handlers import admin, main
 from settings import Settings
+from middlewares import UserMiddleware, SettingsMiddleware
 
 
 def create_dispatcher() -> Dispatcher:
@@ -19,6 +20,9 @@ def create_dispatcher() -> Dispatcher:
     )
     dp["settings"] = settings = Settings()
     dp.include_routers(admin.router, main.router)
+
+    dp.update.outer_middleware(UserMiddleware())
+    dp.update.outer_middleware(SettingsMiddleware())
 
     dp.callback_query.middleware(CallbackAnswerMiddleware())
 

@@ -8,7 +8,7 @@ pipeline {
 	stages {
 	        stage("Git Clone") {
 	            steps {
-	                git branch: 'main', url: 'https://github.com/prj-space-z/telegram-bot.git'
+	                git branch: 'prod', url: 'https://github.com/prj-space-z/telegram-bot.git'
 	            }       
 	        }
 	

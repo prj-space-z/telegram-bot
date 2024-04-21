@@ -15,4 +15,4 @@ minio_access_key: your_access_key
 minio_secret_key: your_secret_key
 minio_secure: False
 
-faceswap_host: http://192.168.101.2:8000/
+faceswap_host: http://face-swap:8000/

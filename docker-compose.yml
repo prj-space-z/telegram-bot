@@ -11,6 +11,13 @@ services:
     ports:
       - "6379:6379"
 
+  rabbit:
+    image: rabbitmq:latest
+    volumes:
+      - rabbit_data:/var/lib/rabbitmq
+    ports:
+      - "5672:5672"
+
   minio:
     image: minio/minio
     container_name: minio
@@ -26,3 +33,4 @@ services:
 
 volumes:
   redis_data:
+  rabbit_data:

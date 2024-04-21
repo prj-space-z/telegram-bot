@@ -35,7 +35,7 @@ class S3Storage:
                                          data=io.BytesIO(photo.getbuffer()),
                                          tags=tags)
 
-    async def get_patterns_photos(self, pattern_id: int):
+    async def get_patterns_photos(self, pattern_id: int) -> list[io.BytesIO]:
         photos = []
 
         for photo in await self.client.list_objects('patterns'):

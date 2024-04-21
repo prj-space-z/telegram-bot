@@ -3,3 +3,5 @@ admin_id: 6138338289
 mongodb_url: mongodb://localhost:27017
 max_images_pattern: 10
 #TODO: Add max_users_pattern
+
+celery_broker: redis://127.0.0.1:6379/4

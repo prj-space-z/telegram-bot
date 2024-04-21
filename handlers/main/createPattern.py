@@ -111,4 +111,5 @@ async def account_get_username(message: Message, state: FSMContext, bot: Bot):
         caption=f'<b>✅ Шаблон успешно создан</b>\n\nСсылка на ваш шаблон: {pattern_url}',
         reply_markup=for_createPattern.successfully(share_url=pattern_url)
     )
+    # TODO: Сделать переход
     await state.clear()

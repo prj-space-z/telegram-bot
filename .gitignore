@@ -4,3 +4,4 @@
 /photos/*
 docker-compose.yml
 temp
+celerybeat-schedule

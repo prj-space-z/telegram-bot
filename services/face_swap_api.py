@@ -1,4 +1,4 @@
-import httpx
+import requests
 import io
 
 
@@ -6,15 +6,15 @@ class FaceSwapAPI:
     base_url = 'http://127.0.0.1:8000/'
 
     def __init__(self):
-        self.client = httpx.AsyncClient(timeout=60 * 2)
+        self.client = requests.Session()
 
-    async def face_swap(self, target: io.BytesIO, source: io.BytesIO):
+    def face_swap(self, target, source):
         files = {
-            'target': ('1.webp', target.read(), 'image'),
-            'source': ('1.png', source.read(), 'image'),
+            'target': ('1.webp', target, 'image'),
+            'source': ('1.jpg', source, 'image'),
         }
 
-        resp = await self.client.post(self.base_url + 'face-swap', files=files)
+        resp = self.client.post(self.base_url + 'face-swap', files=files, stream=True, timeout=60 * 2)
         return io.BytesIO(resp.content)
 
 

@@ -3,16 +3,13 @@ from aiogram.client.session.aiohttp import AiohttpSession
 from aiogram.enums import ParseMode
 from aiogram.fsm.storage.redis import RedisStorage
 from aiogram.utils.callback_answer import CallbackAnswerMiddleware
-from redis.asyncio import Redis
-from services import mjson
+from services import mjson, redis
 from handlers import admin, main
 from settings import Settings
 from middlewares import UserMiddleware, SettingsMiddleware
 
 
 def create_dispatcher() -> Dispatcher:
-    redis = Redis()
-
     dp = Dispatcher(
         name="main_dispatcher",
         storage=RedisStorage(redis=redis, json_loads=mjson.decode, json_dumps=mjson.encode),

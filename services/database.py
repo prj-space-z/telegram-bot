@@ -4,6 +4,10 @@ import motor.motor_asyncio
 import time
 from settings import Settings
 from transliterate import translit, get_available_language_codes
+from redis.asyncio import Redis
+
+
+redis = Redis()
 
 
 class DataBase:

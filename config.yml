@@ -1,16 +1,16 @@
 api_token: 7145931830:AAHTYob-UUQl6LjJEqxFRuvRfrIuxjSaFwc
 admin_id: 6138338289
-mongodb_url: mongodb://localhost:27017
+mongodb_url: mongodb://mongo:27017
 max_images_pattern: 10
 #TODO: Add max_users_pattern
 
-celery_broker: redis://localhost:6379/5
+celery_broker: redis://redis-db:6379/1
 
-redis_host: localhost
+redis_host: redis-db
 redis_port: 6379
 redis_db: 0
 
-minio_endpoint: localhost:9000
+minio_endpoint: minio:9000
 minio_access_key: your_access_key
 minio_secret_key: your_secret_key
 minio_secure: False

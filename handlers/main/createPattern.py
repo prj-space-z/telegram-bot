@@ -6,11 +6,13 @@ from filters.states import PatternCreate
 from aiogram.fsm.context import FSMContext
 import io
 from services import db, s3, images
+from filters import CheckSubFilter
+
 
 router = Router(name=__name__)
 
 
-@router.callback_query(F.data == "createPattern")
+@router.callback_query(F.data == "createPattern", CheckSubFilter())
 async def create_pattern(callback: CallbackQuery, state: FSMContext):
     await callback.message.answer_photo(
         photo='https://i.imgur.com/pqpa6qz.jpeg',

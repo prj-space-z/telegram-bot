@@ -11,5 +11,10 @@ class StickersCreate(StatesGroup):
     image = State()
 
 
+class TelegramAD(StatesGroup):
+    chat = State()
+    url = State()
+
+
 NoneState = StateFilter(None)
 AnyState = ~NoneState

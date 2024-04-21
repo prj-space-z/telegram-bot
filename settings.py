@@ -20,4 +20,6 @@ class Settings(YAMLSettings):
     redis_port: int
     redis_db: int
 
+    faceswap_host: str
+
     model_config = YAMLSettingsConfig(env_file_encoding="utf-8", yaml_file=("config.yml",))

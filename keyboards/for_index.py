@@ -18,3 +18,21 @@ def go_home() -> InlineKeyboardMarkup:
     ]
 
     return InlineKeyboardMarkup(inline_keyboard=buttons)
+
+
+def subscription_check(callback_data: str, telegram: str = None, vk: str = None) -> InlineKeyboardMarkup:
+    buttons = []
+
+    if telegram is not None:
+        buttons.append(
+            [types.InlineKeyboardButton(text="🍏 Telegram", url=telegram)]
+        )
+
+    if vk is not None:
+        buttons.append(
+            [types.InlineKeyboardButton(text="🍎 ВКонтакте", url=vk)]
+        )
+
+    buttons.append([types.InlineKeyboardButton(text="✅ Готово", callback_data=callback_data)])
+
+    return InlineKeyboardMarkup(inline_keyboard=buttons)

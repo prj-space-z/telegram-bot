@@ -1,11 +1,11 @@
 import requests
 import io
+from settings import Settings
 
 
 class FaceSwapAPI:
-    base_url = 'http://192.168.101.2:8000/'
-
-    def __init__(self):
+    def __init__(self, url: str):
+        self.base_url = url
         self.client = requests.Session()
 
     def face_swap(self, target, source):
@@ -18,23 +18,4 @@ class FaceSwapAPI:
         return io.BytesIO(resp.content)
 
 
-face_swap = FaceSwapAPI()
-
-if __name__ == '__main__':
-    import asyncio
-
-    async def main():
-        with open('../tmp.WEBP', 'rb') as f:
-            t = io.BytesIO(f.read())
-
-        with open('../tmp.WEBP', 'rb') as f:
-            s = io.BytesIO(f.read())
-
-        face = FaceSwapAPI()
-        o = await face.face_swap(t, s)
-
-        with open('../tmp2.WEBP', 'wb') as f:
-            f.write(o.read())
-
-
-    asyncio.run(main())
+face_swap = FaceSwapAPI(Settings().faceswap_host)

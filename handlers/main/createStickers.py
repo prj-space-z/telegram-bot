@@ -10,11 +10,12 @@ from services.sheduler import create_stickers_task, app
 import io
 import time
 from aiogram.types import BufferedInputFile
+from filters import CheckSubFilter
 
 router = Router(name=__name__)
 
 
-@router.callback_query(F.data == "createStickers")
+@router.callback_query(F.data == "createStickers", CheckSubFilter())
 async def create_stickers(callback: CallbackQuery):
     await callback.message.answer_photo(
         photo='https://i.imgur.com/rX6mOEK.jpg',

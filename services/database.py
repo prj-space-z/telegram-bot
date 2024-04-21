@@ -56,6 +56,15 @@ class DataBase:
     async def get_user(self, user_id: int):
         return await self.user_collection.find_one({'user_id': user_id})
 
+    async def get_pattern(self, pattern_id: int) -> dict:
+        return await self.patterns_collection.find_one({'id': pattern_id})
+
+    async def edit_pattern(self, pattern_id: int, data: dict):
+        await self.patterns_collection.update_one({'id': pattern_id}, {'$set': data})
+
+    async def delete_pattern(self, pattern_id: int):
+        await self.patterns_collection.delete_one({'id': pattern_id})
+
     async def get_user_count(self, time_h: int = None):
         if time_h is None:
             return await self.user_collection.count_documents({})

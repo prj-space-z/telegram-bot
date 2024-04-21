@@ -10,7 +10,7 @@ def get_panel(technical_work: bool) -> InlineKeyboardMarkup:
         ],
         [
             types.InlineKeyboardButton(text="Соц-сети 🔥", callback_data="admin|socialNetwork"),
-            types.InlineKeyboardButton(text="Шаблоны ⚡️", callback_data="menu")
+            types.InlineKeyboardButton(text="Шаблоны ⚡️", callback_data="admin|template")
          ],
     ]
 
@@ -55,6 +55,23 @@ def get_telegram() -> ReplyKeyboardMarkup:
 
 def go_menu() -> types.InlineKeyboardMarkup:
     buttons = [
+        [
+            types.InlineKeyboardButton(text="◀️ В меню", callback_data="admin|menu"),
+        ]
+    ]
+
+    return InlineKeyboardMarkup(inline_keyboard=buttons)
+
+
+def pattern_menu(is_share: bool, id_: int) -> types.InlineKeyboardMarkup:
+    buttons = [
+        [
+            types.InlineKeyboardButton(text=f"{'🟢' if is_share else '🔴'} Публичный", callback_data=f"admin|template|share|{id_}"),
+            types.InlineKeyboardButton(text="❌ Удалить", callback_data=f"admin|template|delete|{id_}"),
+        ],
+        [
+            types.InlineKeyboardButton(text='💎 Получить стикеры', callback_data=f'admin|template|download|{id_}'),
+        ],
         [
             types.InlineKeyboardButton(text="◀️ В меню", callback_data="admin|menu"),
         ]

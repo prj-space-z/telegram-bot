@@ -12,13 +12,13 @@ router = Router(name=__name__)
 
 @router.callback_query(F.data == "createPattern")
 async def create_pattern(callback: CallbackQuery, state: FSMContext):
-    await callback.message.delete()
     await callback.message.answer_photo(
         photo='https://i.imgur.com/pqpa6qz.jpeg',
         caption='<b>🔥 Отправьте шаблон стикера на котором будет заменено лицо</b>\n\n'
                 '❗️ Изображение должно быть больше или равно 512x512 пикс',
         reply_markup=for_index.go_home()
     )
+    await callback.message.delete()
     await state.set_state(PatternCreate.image)
     await state.update_data({'images': []})
 
@@ -55,12 +55,12 @@ async def account_get_username(message: Message, state: FSMContext, settings: di
 
 @router.callback_query(F.data == "createPattern|getName")
 async def create_pattern(callback: CallbackQuery, state: FSMContext):
-    await callback.message.delete()
     await callback.message.answer_photo(
         photo='https://i.imgur.com/mztr2yf.jpeg',
         caption='<b>⚡️ Придумайте название шаблона:</b>',
         reply_markup=for_index.go_home()
     )
+    await callback.message.delete()
     await state.set_state(PatternCreate.title)
 
 

@@ -3,7 +3,7 @@ import io
 
 
 class FaceSwapAPI:
-    base_url = 'http://127.0.0.1:8000/'
+    base_url = 'http://192.168.101.2:8000/'
 
     def __init__(self):
         self.client = requests.Session()

@@ -19,5 +19,7 @@ class SettingsMiddleware(BaseMiddleware):
             if user.id != data['settings'].admin_id:
                 await data['bot'].send_message(user.id, '<b>🙊 Извините! Бот на тех-работах</b>')
                 return
+            else:
+                await data['bot'].send_message(user.id, '❗️ Бот на тех работах\n❗️ Пользователи не могут им пользоваться')
 
         return await handler(event, data)

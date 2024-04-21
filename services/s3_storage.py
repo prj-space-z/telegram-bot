@@ -4,18 +4,18 @@ import random
 import string
 import io
 import aiohttp
+from settings import Settings
 
 
 class S3Storage:
     buckets = ['patterns']
 
-    def __init__(self):
-        #TODO: Go conf
+    def __init__(self, endpoint: str, access_key: str, secret_key: str, secure: bool):
         self.client = Minio(
-            "localhost:9000",
-            access_key="your_access_key",
-            secret_key="your_secret_key",
-            secure=False
+            endpoint,
+            access_key=access_key,
+            secret_key=secret_key,
+            secure=secure
         )
 
     async def init(self):
@@ -48,15 +48,10 @@ class S3Storage:
         return photos
 
 
-s3 = S3Storage()
-
-if __name__ == '__main__':
-    import asyncio
-
-    loop = asyncio.get_event_loop()
-
-    async def main():
-        s = S3Storage()
-        await s.get_patterns_photos(1)
-
-    loop.run_until_complete(main())
+settings = Settings()
+s3 = S3Storage(
+    settings.minio_endpoint,
+    settings.minio_access_key.get_secret_value(),
+    settings.minio_secret_key.get_secret_value(),
+    settings.minio_secure
+)

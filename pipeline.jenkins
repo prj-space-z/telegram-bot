@@ -1,10 +1,6 @@
 pipeline {
 	agent any
 
-	environment {
-		DOCKERHUB_CREDENTIALS=credentials('DockerHub')
-	}
-
 	stages {
 	        stage("Git Clone") {
 	            steps {
@@ -12,29 +8,11 @@ pipeline {
 	            }       
 	        }
 	
-	        stage('Login') {
+	        stage('Start') {
 			steps {
-				sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+				sh 'docker-compose up --build'
 			}
 		} 
-	
-		stage('Build') {
-			steps {
-				sh 'docker build -t whatxd/telegram-bot:${BUILD_NUMBER} -t whatxd/back:latest .'
-			}
-		}
-	
-		stage('Push') {
-			steps {
-				sh 'docker push whatxd/telegram-bot:${BUILD_NUMBER}'
-			}
-		}
-
-		stage('Delete') {
-			steps {
-				sh 'docker rmi whatxd/telegram-bot:${BUILD_NUMBER}'
-			}
-		}
 	}
 
 	post {

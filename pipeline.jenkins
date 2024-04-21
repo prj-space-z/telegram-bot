@@ -26,13 +26,13 @@ pipeline {
 	
 		stage('Push') {
 			steps {
-				sh 'docker push whatxd/telegram-bot:${BUILD_NUMBER}'
+				sh 'docker push whatxd/telegram-bot:${BUILD_NUMBER} whatxd/telegram-bot:latest'
 			}
 		}
 
 		stage('Delete') {
 			steps {
-				sh 'docker rmi whatxd/telegram-bot:${BUILD_NUMBER}'
+				sh 'docker rmi whatxd/telegram-bot:${BUILD_NUMBER} whatxd/telegram-bot:latest'
 			}
 		}
 	}

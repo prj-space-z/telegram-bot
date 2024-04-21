@@ -25,5 +25,5 @@ async def cmd_start(message: Message, state: FSMContext):
 async def go_menu(callback: CallbackQuery, state: FSMContext):
     """Go menu"""
 
-    await callback.message.delete()
     await cmd_start(callback.message, state)
+    await callback.message.delete()

@@ -14,7 +14,7 @@ class UserMiddleware(BaseMiddleware):
     ) -> Optional[Any]:
         user: Optional[User] = data.get("event_from_user")
         if user:
-            db_user = await db.create_user(user.id)
+            db_user = await db.get_user(user.id)
             if not db_user:
                 db_user = await db.create_user(user.id)
             data["db_user"] = db_user

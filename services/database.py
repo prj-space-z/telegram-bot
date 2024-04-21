@@ -7,7 +7,12 @@ from transliterate import translit, get_available_language_codes
 from redis.asyncio import Redis
 
 
-redis = Redis()
+settings = Settings()
+redis = Redis(
+    host=settings.redis_host,
+    port=settings.redis_port,
+    db=settings.redis_db,
+)
 
 
 class DataBase:
@@ -28,13 +33,17 @@ class DataBase:
             'name': name,
             'translit': translit(name, 'ru', reversed=True),
             'user_id': user_id,
-            'is_share': share
+            'is_share': share,
+            'created_at': time.time(),
         }
         await self.patterns_collection.insert_one(data)
         return data
 
     async def get_patterns(self, js: dict) -> list:
         return [data async for data in self.patterns_collection.find(js)]
+
+    async def get_patterns_count(self):
+        return await self.patterns_collection.count_documents({})
 
     async def create_user(self, user_id: int):
         data = {
@@ -46,6 +55,14 @@ class DataBase:
 
     async def get_user(self, user_id: int):
         return await self.user_collection.find_one({'user_id': user_id})
+
+    async def get_user_count(self, time_h: int = None):
+        if time_h is None:
+            return await self.user_collection.count_documents({})
+        else:
+            start_time = time.time() - time_h * 60 * 60
+            query = {'created_at': {'$gte': start_time, '$lte': time.time()}}
+            return await self.user_collection.count_documents(query)
 
     async def settings_init(self):
         if await self.settings_collection.count_documents({}) == 0:
@@ -69,6 +86,9 @@ class DataBase:
 
     async def get_settings(self):
         return await self.settings_collection.find_one({})
+
+    async def edit_settings(self, js: dict):
+        return await self.settings_collection.update_one({}, {'$set': js})
 
 
 db = DataBase(Settings().mongodb_url.get_secret_value())

@@ -8,7 +8,6 @@ router = Router(name=__name__)
 
 @router.callback_query(F.data == "howWork")
 async def create_stickers(callback: CallbackQuery):
-    await callback.message.delete()
     await callback.message.answer_photo(
         photo='https://i.imgur.com/ZRTZzvi.jpg',
         caption="""<b>😎 Работает всё очень просто:</b>
@@ -25,3 +24,4 @@ async def create_stickers(callback: CallbackQuery):
 <b>🙊 Дерзай!</b>""",
         reply_markup=for_index.go_home()
     )
+    await callback.message.delete()

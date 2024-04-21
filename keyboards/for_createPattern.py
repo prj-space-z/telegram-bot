@@ -3,7 +3,6 @@ from aiogram.utils.keyboard import InlineKeyboardMarkup
 import urllib.parse
 
 
-
 def get_images() -> InlineKeyboardMarkup:
     buttons = [
         [types.InlineKeyboardButton(text="Создать шаблон ⚡️ ", callback_data="createPattern|getName")],
